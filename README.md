@@ -2,7 +2,7 @@
 O trabalho a seguir foi designado pelo **Professor Walisson Ferreira**, que leciona a disciplina de **Algoritmos em Grafos** no curso de **Engenharia de Computação** da **PUC Minas**.
 
 ## Objetivo
-A meta a ser alcançado com esse projeto é desenvolver uma **biblioteca de grafos** que permita a representação do grafo tanto em **matriz de adjacência** quanto
+A meta a ser alcançada com esse projeto é desenvolver uma **biblioteca de grafos** que permita a representação do grafo tanto em **matriz de adjacência** quanto
 em **lista de adjacência**.
 
 ### Funcionalidades
@@ -20,7 +20,7 @@ As funções fornecidas pela biblioteca são:
 - Verificar se o grafo é completo,
 - Fazer busca em profundidade,
 - Fazer busca em largura,
-- Verificar a existência de caminho entre dois vértices
+- Verificar a existência de caminho entre dois vértices,
 - Gerar um arquivo .gefx que permite a vizualização do grafo através da ferramenta [Gephi](https://gephi.org/)
 
 ## Integrantes
