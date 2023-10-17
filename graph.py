@@ -9,16 +9,26 @@ class GraphMatrix:
         return self.num_vertices
     
     # Adicionar aresta simples
-    def add_edge(self, v1, v2):
+    def add_edge(self, v1, v2, weight = 0):
         if 0 <= v1 < self.num_vertices and 0 <= v2 < self.num_vertices:
-            self.graph[v1][v2] = 1
-            self.graph[v2][v1] = 1
+            # Caso o peso seja 0 (padrão) a aresta não sera ponderada
+            if weight == 0:
+                self.graph[v1][v2] = 1
+                self.graph[v2][v1] = 1
+            else:
+                self.graph[v1][v2] = weight
+                self.graph[v2][v1] = weight
 
     # Adicionar aresta direcionada de v1 para v2
-    def add_directed_edge(self, v1, v2):
+    def add_directed_edge(self, v1, v2, weight = 0):
         if 0 <= v1 < self.num_vertices and 0 <= v2 < self.num_vertices:
-            self.graph[v1][v2] = 1
-            self.graph[v2][v1] = 0
+            # Caso o peso seja 0 (padrão) a aresta não sera ponderada
+            if weight == 0:
+                self.graph[v1][v2] = 1
+                self.graph[v2][v1] = 0
+            else:
+                self.graph[v1][v2] = weight
+                self.graph[v2][v1] = 0
 
     # Remover aresta
     def remove_edge(self, v1, v2):
@@ -33,18 +43,33 @@ class GraphAdjList:
         self.graph = [[] for _ in range(num_vertices)]
 
     # Adicionar aresta simples
-    def add_edge(self, v1, v2):
+    def add_edge(self, v1, v2, weight = 0):
         if 0 <= v1 < self.num_vertices and 0 <= v2 < self.num_vertices:
-            self.graph[v1].append(v2)
-            self.graph[v2].append(v1)
+            # Caso o peso seja 0 (padrão) a aresta não sera ponderada
+            if weight == 0:
+                self.graph[v1].append(v2)
+                self.graph[v2].append(v1)
+            else:
+                temp1 = (v2, weight)
+                temp2 = (v1, weight)
+                self.graph[v1].append(temp1)
+                self.graph[v2].append(temp2)
 
     # Adicionar aresta direcionada de v1 para v2
-    def add_directed_edge(self, v1, v2):
+    def add_directed_edge(self, v1, v2, weight = 0):
         if 0 <= v1 < self.num_vertices and 0 <= v2 < self.num_vertices:
-            self.graph[v1].append(v2)
-            if v1 in self.graph[v2]:
-                self.graph[v2].remove(v1)
-
+            # Caso o peso seja 0 (padrão) a aresta não sera ponderada
+            if weight == 0:
+                self.graph[v1].append(v2)
+                if v1 in self.graph[v2]:
+                    self.graph[v2].remove(v1)
+            else:
+                temp1 = (v2, weight)
+                temp2 = (v1, weight)
+                self.graph[v1].append(temp1)
+                if temp2 in self.graph[v2]:
+                    self.graph[v2].remove(temp2)
+            
     # Remover aresta
     def remove_edge(self, v1, v2):
         if 0 <= v1 < self.num_vertices and 0 <= v2 < self.num_vertices:
