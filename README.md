@@ -1,5 +1,5 @@
 # Trabalho Prático - Etapa 1
-O trabalho a seguir foi designado pelo **Professor Walisson Ferreira**, que leciona a disciplina de **Algoritmo em Grafos** no curso de **Engenharia de Computação** da **PUC Minas**.
+O trabalho a seguir foi designado pelo **Professor Walisson Ferreira**, que leciona a disciplina de **Algoritmos em Grafos** no curso de **Engenharia de Computação** da **PUC Minas**.
 
 ## Objetivo
 A meta a ser alcançado com esse projeto é desenvolver uma **biblioteca de grafos** que permita a representação do grafo tanto em **matriz de adjacência** quanto
