@@ -4,6 +4,10 @@ class GraphMatrix:
         self.num_vertices = num_vertices
         self.graph = [[0] * num_vertices for _ in range(num_vertices)]
 
+    # Método que retornará o número de vértices
+    def __len__(self):
+        return self.num_vertices
+    
     # Adicionar aresta simples
     def add_edge(self, v1, v2):
         if 0 <= v1 < self.num_vertices and 0 <= v2 < self.num_vertices:
