@@ -24,6 +24,8 @@ def export_directed_graph(graph, file_name):
         f.write('  </graph>\n')
         f.write('</gexf>\n')
 
+# Suposto código de exportação de arestas ponderadas
+'''
 def export_weighted_graph(graph, file_name):
     with open(file_name, "w") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
@@ -47,3 +49,4 @@ def export_weighted_graph(graph, file_name):
 
         f.write('  </graph>\n')
         f.write('</gexf>\n')
+'''
