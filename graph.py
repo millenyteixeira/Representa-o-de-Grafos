@@ -7,6 +7,12 @@ class GraphMatrix:
         # Criação da matriz peso para exportação
         self.weight = [[0] * num_vertices for _ in range(num_vertices)]
 
+        # Criação da lista de graus do vértice para consulta
+        self.degree = [0 for _ in range(num_vertices)]
+
+        # Criação da variável de grau do grafo
+        self.graph_degree = 0
+        
     # Método que retornará o número de vértices
     def __len__(self):
         return self.num_vertices
@@ -50,6 +56,9 @@ class GraphAdjList:
         self.num_vertices = num_vertices
         self.graph = [[] for _ in range(num_vertices)]
 
+        # Criação da lista peso para consulta de grau
+        # self.weight = [[] for _ in range(num_vertices)]
+
     # Adicionar aresta simples
     def add_edge(self, v1, v2, wght = 0):
         if 0 <= v1 < self.num_vertices and 0 <= v2 < self.num_vertices:
@@ -60,6 +69,8 @@ class GraphAdjList:
             else:
                 temp1 = (v2, wght)
                 temp2 = (v1, wght)
+                # self.weight[v1].append(wght) # Salva o peso da lista de adjacência em uma lista peso
+                # self.weight[v2].append(wght)
                 self.graph[v1].append(temp1)
                 self.graph[v2].append(temp2)
 
@@ -74,6 +85,7 @@ class GraphAdjList:
             else:
                 temp1 = (v2, wght)
                 #temp2 = (v1, wght)
+                # self.weight[v1].append(wght) # Salva o peso da lista de adjacência em uma lista peso
                 self.graph[v1].append(temp1)
                 # if temp2 in self.graph[v2]:
                 #     self.graph[v2].remove(temp2) # Remove a aresta de v2>v1 ao adicionar v1>v2
