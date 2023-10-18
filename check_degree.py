@@ -21,3 +21,7 @@ def check_vertex_degree(graph):
                 else:
                     # Se a aresta for direcionada mas não for ponderada, incrementa 1 apenas no vértice de saída
                     graph.degree[i] += graph.weight[i][j]
+
+    # Definição do grau do grafo
+    for i in range(len(graph)):
+        graph.graph_degree += graph.degree[i]
