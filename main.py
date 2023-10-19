@@ -1,7 +1,5 @@
 from graph import GraphMatrix, GraphAdjList, GraphAlgorithms
 from export import export_directed_graph, export_undirected_graph
-from check_degree import check_vertex_degree
-
 
 def main():
     # Crie uma instância da classe GraphMatrix e adicione arestas
@@ -36,7 +34,7 @@ def main():
     for i, neighbors in enumerate(adj_list_graph.graph):
         print(f"Vértice {i}: {neighbors}")
 
-    check_vertex_degree(matrix_graph)
+    GraphAlgorithms.check_vertex_degree(matrix_graph)
     print("\nGrau dos vértices:")
     print(matrix_graph.degree)
 
