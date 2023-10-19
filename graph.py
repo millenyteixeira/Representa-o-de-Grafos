@@ -97,3 +97,62 @@ class GraphAdjList:
                 self.graph[v1].remove(v2)
             if v1 in self.graph[v2]:
                 self.graph[v2].remove(v1)
+
+class GraphAlgorithms:
+    @staticmethod
+    def get_neighbors(graph, vertex, num_vertices):
+        neighbors = []  # Inicializa neighbors como uma lista vazia
+        if 0 <= vertex < num_vertices:
+            if isinstance(graph, GraphMatrix):
+                # Se o grafo for representado como matriz de adjacência
+                # Encontra os vizinhos verificando as entradas na linha correspondente ao vértice
+                neighbors = [i for i in range(num_vertices) if graph.graph[vertex][i] == 1]
+            elif isinstance(graph, GraphAdjList):
+                # Se o grafo for representado como lista de adjacência
+                # Os vizinhos estão diretamente armazenados na lista de adjacência do vértice
+                neighbors = graph.graph[vertex]
+        return neighbors
+
+    @staticmethod
+    def is_connected(graph):
+        num_vertices = len(graph)
+        visited = [False] * num_vertices
+
+        def dfs(vertex):
+            visited[vertex] = True
+            for neighbor in GraphAlgorithms.get_neighbors(graph, vertex, num_vertices):
+                if not visited[neighbor]:
+                    dfs(neighbor)
+
+        for i in range(num_vertices):
+            if not visited[i]:
+                # Realiza uma busca em profundidade para verificar a conectividade do grafo
+                dfs(i)
+
+        return all(visited)
+
+    @staticmethod
+    def is_regular(graph):
+        if isinstance(graph, GraphMatrix):
+            degree = sum(graph.graph[0])
+            for i in range(1, len(graph)):
+                # Verifica se todos os vértices têm o mesmo grau no grafo representado como matriz de adjacência
+                if sum(graph.graph[i]) != degree:
+                    return False
+        elif isinstance(graph, GraphAdjList):
+            degree = len(graph.graph[0])
+            for i in range(1, len(graph.graph)):
+                # Verifica se todos os vértices têm o mesmo grau no grafo representado como lista de adjacência
+                if len(graph.graph[i]) != degree:
+                    return False
+        return True
+
+    @staticmethod
+    def is_complete(graph):
+        num_vertices = len(graph)
+        for i in range(num_vertices):
+            for j in range(num_vertices):
+                if i != j and j not in graph[i]:
+                    # Verifica se cada vértice está conectado a todos os outros vértices
+                    return False
+        return True

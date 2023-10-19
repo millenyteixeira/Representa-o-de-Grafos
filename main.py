@@ -1,4 +1,4 @@
-from graph import GraphMatrix, GraphAdjList
+from graph import GraphMatrix, GraphAdjList, GraphAlgorithms
 from export import export_directed_graph, export_undirected_graph
 from check_degree import check_vertex_degree
 
@@ -44,6 +44,20 @@ def main():
     print("exemplo: [(vertice1, peso1),(vertice2, peso2)]")
     for i, neighbors in enumerate(adj_list_graph.graph):
         print(f"Vértice {i}: {neighbors}")
+
+    graph_algorithms = GraphAlgorithms()
+
+    vertex_to_check = 2
+    num_vertices = len(adj_list_graph.graph)
+    neighbors_matrix = graph_algorithms.get_neighbors(matrix_graph, vertex_to_check, num_vertices)
+
+    print(f"Vizinhos do Vértice {vertex_to_check}: {neighbors_matrix}")
+
+    print("O Grafo é Conexo:", graph_algorithms.is_connected(matrix_graph))
+
+    print("O Grafo é Regular:", graph_algorithms.is_regular(matrix_graph))
+
+    print("O Grafo Completo:", graph_algorithms.is_complete(matrix_graph.graph))
 
     # Funções de exportações para .gexf
 
