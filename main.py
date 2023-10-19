@@ -27,23 +27,22 @@ def main():
     # adj_list_graph.add_directed_edge(1, 2, 4)
     # adj_list_graph.add_directed_edge(2, 3, 1)
 
-
     # Imprima as representações dos grafos
     print("Matriz de Adjacência:")
     for row in matrix_graph.graph:
         print(row)
     
+    print("\nLista de Adjacência:")
+    for i, neighbors in enumerate(adj_list_graph.graph):
+        print(f"Vértice {i}: {neighbors}")
+
     check_vertex_degree(matrix_graph)
-    print("Grau dos vértices:")
+    print("\nGrau dos vértices:")
     print(matrix_graph.degree)
 
     print("Grau do grafo:")
     print(matrix_graph.graph_degree)
 
-    print("Lista de Adjacência:")
-    print("exemplo: [(vertice1, peso1),(vertice2, peso2)]")
-    for i, neighbors in enumerate(adj_list_graph.graph):
-        print(f"Vértice {i}: {neighbors}")
 
     graph_algorithms = GraphAlgorithms()
 
@@ -51,7 +50,7 @@ def main():
     num_vertices = len(adj_list_graph.graph)
     neighbors_matrix = graph_algorithms.get_neighbors(matrix_graph, vertex_to_check, num_vertices)
 
-    print(f"Vizinhos do Vértice {vertex_to_check}: {neighbors_matrix}")
+    print(f"\nVizinhos do Vértice {vertex_to_check}: {neighbors_matrix}")
 
     print("O Grafo é Conexo:", graph_algorithms.is_connected(matrix_graph))
 
@@ -59,10 +58,6 @@ def main():
 
     print("O Grafo Completo:", graph_algorithms.is_complete(matrix_graph.graph))
 
-    # Funções de exportações para .gexf
-
-    export_directed_graph(matrix_graph, "Directed_graph.gexf")
-    export_undirected_graph(matrix_graph, "Undirected_graph.gexf")
     
     # Teste de busca em profundidade
     start_vertex = 0
@@ -70,9 +65,9 @@ def main():
     path = GraphAlgorithms.depth_first_search(matrix_graph, start_vertex, end_vertex)
     
     if path:
-        print(f"Caminho entre {start_vertex} e {end_vertex}: {path}")
+        print(f"\nCaminho entre {start_vertex} e {end_vertex}: {path}")
     else:
-        print(f"Não há caminho entre {start_vertex} e {end_vertex}.")
+        print(f"\nNão há caminho entre {start_vertex} e {end_vertex}.")
 
     # Teste de verificação de existência de caminho
     has_path = GraphAlgorithms.has_path(matrix_graph, start_vertex, end_vertex)
@@ -80,6 +75,10 @@ def main():
         print(f"Existe um caminho entre {start_vertex} e {end_vertex}.")
     else:
         print(f"Não existe um caminho entre {start_vertex} e {end_vertex}.")
+
+    # Funções de exportações para .gexf
+    export_directed_graph(matrix_graph, "Directed_graph.gexf")
+    export_undirected_graph(matrix_graph, "Undirected_graph.gexf")
 
 if __name__ == "__main__":
     main()
