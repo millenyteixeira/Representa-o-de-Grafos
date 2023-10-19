@@ -156,3 +156,72 @@ class GraphAlgorithms:
                     # Verifica se cada vértice está conectado a todos os outros vértices
                     return False
         return True
+    
+    #busca em profundidade
+    @staticmethod
+    def depth_first_search(graph, start_vertex, end_vertex):
+        num_vertices = len(graph)
+        visited = [False] * len(graph)
+        path = []
+
+        def dfs(vertex):
+            #marca o vértice como visitado
+            visited[vertex] = True
+            path.append(vertex)
+            if vertex == end_vertex:
+                return True
+            for neighbor in GraphAlgorithms.get_neighbors(graph, vertex, len(graph)):
+                #se nao tiver sido visitado fazer a dfs
+                if not visited[neighbor]:
+                    if dfs(neighbor):
+                        return True
+            #desfazer a inclusão do vértice atual no caminho quando nenhum caminho válido é encontrado a partir dele
+            path.pop()
+            return False
+
+        if dfs(start_vertex):
+            return path
+        else:
+            return []
+
+    @staticmethod
+    def breadth_first_search(graph, start_vertex, end_vertex):
+        #rastrear quais vértices foram visitados
+        visited = [False] * len(graph)
+        queue = deque()
+        path = [-1] * len(graph)
+
+        queue.append(start_vertex)
+        visited[start_vertex] = True
+
+        while queue:
+            vertex = queue.popleft()
+            if vertex == end_vertex:
+                break
+
+            for neighbor in GraphAlgorithms.get_neighbors(graph, vertex):
+                #adiciona os vizinhos não visitados à fila e  marca como visitados
+                if not visited[neighbor]:
+                    visited[neighbor] = True
+                    queue.append(neighbor)
+                    path[neighbor] = vertex
+
+        #Se não for possível encontrar um caminho, a função retorna uma lista vazia
+        if path[end_vertex] == -1:
+            return []
+        else:
+            path_list = []
+            while end_vertex != -1:
+                path_list.append(end_vertex)
+                end_vertex = path[end_vertex]
+            return path_list[::-1]
+
+    @staticmethod
+    def has_path(graph, start_vertex, end_vertex):
+        #se a busca em profundidade retornar uma lista maior que 0, existe caminho
+        return len(GraphAlgorithms.depth_first_search(graph, start_vertex, end_vertex)) > 0
+
+    @staticmethod
+    def find_path(graph, start_vertex, end_vertex):
+        #retorna a busca em largura
+        return GraphAlgorithms.breadth_first_search(graph, start_vertex, end_vertex)

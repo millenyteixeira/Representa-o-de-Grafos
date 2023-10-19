@@ -63,6 +63,23 @@ def main():
 
     export_directed_graph(matrix_graph, "Directed_graph.gexf")
     export_undirected_graph(matrix_graph, "Undirected_graph.gexf")
+    
+    # Teste de busca em profundidade
+    start_vertex = 0
+    end_vertex = 3
+    path = GraphAlgorithms.depth_first_search(matrix_graph, start_vertex, end_vertex)
+    
+    if path:
+        print(f"Caminho entre {start_vertex} e {end_vertex}: {path}")
+    else:
+        print(f"Não há caminho entre {start_vertex} e {end_vertex}.")
+
+    # Teste de verificação de existência de caminho
+    has_path = GraphAlgorithms.has_path(matrix_graph, start_vertex, end_vertex)
+    if has_path:
+        print(f"Existe um caminho entre {start_vertex} e {end_vertex}.")
+    else:
+        print(f"Não existe um caminho entre {start_vertex} e {end_vertex}.")
 
 if __name__ == "__main__":
     main()
