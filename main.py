@@ -73,6 +73,12 @@ def main():
         print(f"Existe um caminho entre {start_vertex} e {end_vertex}.")
     else:
         print(f"Não existe um caminho entre {start_vertex} e {end_vertex}.")
+    
+    has_path_bfs = GraphAlgorithms.has_path(matrix_graph, start_vertex, end_vertex)
+    if has_path_bfs:
+        print(f"Existe um caminho entre {start_vertex} e {end_vertex} (BFS.")
+    else:
+        print(f"Não existe um caminho entre {start_vertex} e {end_vertex} (BFS).")
 
     # Funções de exportações para .gexf
     export_directed_graph(matrix_graph, "Directed_graph.gexf")
