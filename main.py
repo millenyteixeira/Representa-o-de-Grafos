@@ -4,14 +4,14 @@ from export import export_directed_graph, export_undirected_graph
 def main():
     # Crie uma instância da classe GraphMatrix e adicione arestas
     matrix_graph = GraphMatrix(4)
-    matrix_graph.add_edge(0, 1, 2)
+    matrix_graph.add_edge(0, 1)
     matrix_graph.add_edge(0, 2, 3)
-    matrix_graph.add_edge(1, 2, 4)
-    matrix_graph.add_edge(2, 3, 1)
+    # matrix_graph.add_edge(1, 2, 4)
+    # matrix_graph.add_edge(2, 3, 1)
     # matrix_graph.add_directed_edge(0, 1, 2)
     # matrix_graph.add_directed_edge(0, 2, 3)
-    # matrix_graph.add_directed_edge(1, 2, 4)
-    # matrix_graph.add_directed_edge(2, 3, 1)
+    matrix_graph.add_directed_edge(1, 2, 4)
+    matrix_graph.add_directed_edge(2, 3)
   
 
     # Crie uma instância da classe GraphAdjList e adicione arestas
@@ -56,7 +56,7 @@ def main():
 
     print("O Grafo Completo:", graph_algorithms.is_complete(matrix_graph.graph))
 
-    
+    print("Busca em Profundidade")
     # Teste de busca em profundidade
     start_vertex = 0
     end_vertex = 3
@@ -66,6 +66,15 @@ def main():
         print(f"\nCaminho entre {start_vertex} e {end_vertex}: {path}")
     else:
         print(f"\nNão há caminho entre {start_vertex} e {end_vertex}.")
+
+    print("Busca em Largura")
+    # Teste de busca em largura
+    path_2 = GraphAlgorithms.breadth_first_search(matrix_graph, start_vertex, end_vertex)
+    if path_2:
+        print(f"\nCaminho entre {start_vertex} e {end_vertex}: {path_2}")
+    else:
+        print(f"\nNão há caminho entre {start_vertex} e {end_vertex}.")
+
 
     # Teste de verificação de existência de caminho
     has_path = GraphAlgorithms.has_path(matrix_graph, start_vertex, end_vertex)
