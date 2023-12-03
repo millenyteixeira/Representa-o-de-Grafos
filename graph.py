@@ -258,17 +258,32 @@ class GraphAlgorithms:
         #retorna a busca em largura
         return GraphAlgorithms.breadth_first_search(graph, start_vertex, end_vertex)
     
+    
+
     @staticmethod
-    def bellman_ford(self, start_vertex):
-        distance = [float('inf')] * self.num_vertices
-        distance[start_vertex] = 0
+    def bellman_ford(graph, source):
+        distance = [float("Inf")] * len(graph.graph)
+        distance[source] = 0
 
-        for _ in range(self.num_vertices - 1):
-            for u in range(self.num_vertices):
-                for v in range(self.num_vertices):
-                    if self.graph[u][v] != 0:  # Modifique aqui para considerar apenas arestas existentes
-                        if distance[u] + self.graph[u][v] < distance[v]:
-                            distance[v] = distance[u] + self.graph[u][v]
+        # Passo 2: Relaxa as arestas |V| - 1 vezes
+        for _ in range(len(graph.graph) - 1):
+            for u in range(len(graph.graph)):
+                for v in range(len(graph.graph)):
+                    if graph.graph[u][v] != 0:  # Verifica se há uma aresta entre u e v
+                        if distance[u] != float("Inf") and distance[u] + graph.graph[u][v] < distance[v]:
+                            distance[v] = distance[u] + graph.graph[u][v]
 
+        # Passo 3: Verifica ciclos negativos
+        for u in range(len(graph.graph)):
+            for v in range(len(graph.graph)):
+                if graph.graph[u][v] != 0:  # Verifica se há uma aresta entre u e v
+                    if distance[u] != float("Inf") and distance[u] + graph.graph[u][v] < distance[v]:
+                        print("O grafo contém um ciclo de peso negativo")
+                        return
+
+     
+        # retorna as distâncias mais curtas
         return distance
+
+
 

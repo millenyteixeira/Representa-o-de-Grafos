@@ -82,18 +82,24 @@ def main():
     export_directed_graph(matrix_graph, "Directed_graph.gexf")
     export_undirected_graph(matrix_graph, "Undirected_graph.gexf")
 
-    # Teste do algoritmo de Bellman-Ford
-    print("\nAlgoritmo de Bellman-Ford:")
-
-# Escolha um vértice de origem 
+    # Teste do algoritmo de Bellman-Ford para calcular a menor distância de uma origem para todos os outros vértices
+    print("\nAlgoritmo de Bellman-Ford para uma origem:")
     start_vertex_bellman_ford = 0
+    distances_from_source = graph_algorithms.bellman_ford(matrix_graph, start_vertex_bellman_ford)
 
-# Aplica o algoritmo de Bellman-Ford para obter as distâncias mais curtas
-    distances_matrix = GraphAlgorithms.bellman_ford(matrix_graph, start_vertex_bellman_ford)
-
-# Imprime as distâncias mais curtas a partir do vértice de origem
-    for i, distance in enumerate(distances_matrix):
+    for i, distance in enumerate(distances_from_source):
         print(f"A distância mais curta de {start_vertex_bellman_ford} para {i} é {distance}")
 
+    # Teste do algoritmo de Bellman-Ford para calcular a menor distância de todos para todos
+    print("\nAlgoritmo de Bellman-Ford para todos os pares de vértices:")
+    all_distances = []
+    for v in range(len(matrix_graph)):
+        distances_from_v = graph_algorithms.bellman_ford(matrix_graph, v)
+        all_distances.append(distances_from_v)
+
+    for i, distances_from_i in enumerate(all_distances):
+        for j, distance in enumerate(distances_from_i):
+            print(f"A distância mais curta de {i} para {j} é {distance}")
+            
 if __name__ == "__main__":
     main()
