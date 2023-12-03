@@ -4,14 +4,14 @@ from export import export_directed_graph, export_undirected_graph
 def main():
     # Crie uma instância da classe GraphMatrix e adicione arestas
     matrix_graph = GraphMatrix(4)
-    matrix_graph.add_edge(0, 1, 2)
+    matrix_graph.add_edge(0, 1, 1)
     matrix_graph.add_edge(0, 2, 3)
-    matrix_graph.add_edge(1, 2, 4)
-    matrix_graph.add_edge(2, 3, 1)
+    #matrix_graph.add_edge(1, 2)
+    #matrix_graph.add_edge(2, 3)
     # matrix_graph.add_directed_edge(0, 1, 2)
     # matrix_graph.add_directed_edge(0, 2, 3)
-    # matrix_graph.add_directed_edge(1, 2, 4)
-    # matrix_graph.add_directed_edge(2, 3, 1)
+    matrix_graph.add_directed_edge(1, 2, 4)
+    matrix_graph.add_directed_edge(2, 3, 1)
   
 
     # Crie uma instância da classe GraphAdjList e adicione arestas
@@ -58,6 +58,7 @@ def main():
 
     
     # Teste de busca em profundidade
+    print("\nbusca em profundidade:")
     start_vertex = 0
     end_vertex = 3
     path = GraphAlgorithms.depth_first_search(matrix_graph, start_vertex, end_vertex)
@@ -68,21 +69,31 @@ def main():
         print(f"\nNão há caminho entre {start_vertex} e {end_vertex}.")
 
     # Teste de verificação de existência de caminho
+    print(f"\nVerifica se existe caminho:")
     has_path = GraphAlgorithms.has_path(matrix_graph, start_vertex, end_vertex)
     if has_path:
         print(f"Existe um caminho entre {start_vertex} e {end_vertex}.")
     else:
         print(f"Não existe um caminho entre {start_vertex} e {end_vertex}.")
-    
-    has_path_bfs = GraphAlgorithms.has_path(matrix_graph, start_vertex, end_vertex)
-    if has_path_bfs:
-        print(f"Existe um caminho entre {start_vertex} e {end_vertex} (BFS.")
-    else:
-        print(f"Não existe um caminho entre {start_vertex} e {end_vertex} (BFS).")
+
+ 
 
     # Funções de exportações para .gexf
     export_directed_graph(matrix_graph, "Directed_graph.gexf")
     export_undirected_graph(matrix_graph, "Undirected_graph.gexf")
+
+    # Teste do algoritmo de Bellman-Ford
+    print("\nAlgoritmo de Bellman-Ford:")
+
+# Escolha um vértice de origem 
+    start_vertex_bellman_ford = 0
+
+# Aplica o algoritmo de Bellman-Ford para obter as distâncias mais curtas
+    distances_matrix = GraphAlgorithms.bellman_ford(matrix_graph, start_vertex_bellman_ford)
+
+# Imprime as distâncias mais curtas a partir do vértice de origem
+    for i, distance in enumerate(distances_matrix):
+        print(f"A distância mais curta de {start_vertex_bellman_ford} para {i} é {distance}")
 
 if __name__ == "__main__":
     main()

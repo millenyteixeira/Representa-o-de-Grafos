@@ -257,3 +257,18 @@ class GraphAlgorithms:
     def find_path(graph, start_vertex, end_vertex):
         #retorna a busca em largura
         return GraphAlgorithms.breadth_first_search(graph, start_vertex, end_vertex)
+    
+    @staticmethod
+    def bellman_ford(self, start_vertex):
+        distance = [float('inf')] * self.num_vertices
+        distance[start_vertex] = 0
+
+        for _ in range(self.num_vertices - 1):
+            for u in range(self.num_vertices):
+                for v in range(self.num_vertices):
+                    if self.graph[u][v] != 0:  # Modifique aqui para considerar apenas arestas existentes
+                        if distance[u] + self.graph[u][v] < distance[v]:
+                            distance[v] = distance[u] + self.graph[u][v]
+
+        return distance
+
