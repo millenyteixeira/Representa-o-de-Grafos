@@ -257,3 +257,55 @@ class GraphAlgorithms:
     def find_path(graph, start_vertex, end_vertex):
         #retorna a busca em largura
         return GraphAlgorithms.breadth_first_search(graph, start_vertex, end_vertex)
+    
+    
+
+    @staticmethod
+    def bellman_ford(graph, source):
+        distance = [float("Inf")] * len(graph.graph)
+        distance[source] = 0
+
+        # Passo 2: Relaxa as arestas |V| - 1 vezes
+        for _ in range(len(graph.graph) - 1):
+            for u in range(len(graph.graph)):
+                for v in range(len(graph.graph)):
+                    if graph.graph[u][v] != 0:  # Verifica se há uma aresta entre u e v
+                        if distance[u] != float("Inf") and distance[u] + graph.graph[u][v] < distance[v]:
+                            distance[v] = distance[u] + graph.graph[u][v]
+
+        # Passo 3: Verifica ciclos negativos
+        for u in range(len(graph.graph)):
+            for v in range(len(graph.graph)):
+                if graph.graph[u][v] != 0:  # Verifica se há uma aresta entre u e v
+                    if distance[u] != float("Inf") and distance[u] + graph.graph[u][v] < distance[v]:
+                        print("O grafo contém um ciclo de peso negativo")
+                        return
+
+     
+        # retorna as distâncias mais curtas
+        return distance
+    
+    # Dentro da classe GraphAlgorithms
+    @staticmethod
+    def floyd_warshall(graph):
+        num_vertices = len(graph)
+        distance_matrix = [[float('inf')] * num_vertices for _ in range(num_vertices)]
+
+        for i in range(num_vertices):
+            for j in range(num_vertices):
+                if i == j:
+                    distance_matrix[i][j] = 0
+                elif graph[i][j] != 0:
+                    distance_matrix[i][j] = graph[i][j]
+
+        for k in range(num_vertices):
+            for i in range(num_vertices):
+                for j in range(num_vertices):
+                    if distance_matrix[i][k] != float('inf') and distance_matrix[k][j] != float('inf'):
+                        distance_matrix[i][j] = min(distance_matrix[i][j], distance_matrix[i][k] + distance_matrix[k][j])
+
+        return distance_matrix
+
+
+
+
