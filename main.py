@@ -4,16 +4,6 @@ from export import export_directed_graph, export_undirected_graph
 def main():
     # Crie uma instância da classe GraphMatrix e adicione arestas
     matrix_graph = GraphMatrix(4)
-<<<<<<< HEAD
-    matrix_graph.add_edge(0, 1)
-    matrix_graph.add_edge(0, 2, 3)
-    # matrix_graph.add_edge(1, 2, 4)
-    # matrix_graph.add_edge(2, 3, 1)
-    # matrix_graph.add_directed_edge(0, 1, 2)
-    # matrix_graph.add_directed_edge(0, 2, 3)
-    matrix_graph.add_directed_edge(1, 2, 4)
-    matrix_graph.add_directed_edge(2, 3)
-=======
     matrix_graph.add_edge(0, 1, 1)
     matrix_graph.add_edge(0, 2, 3)
     #matrix_graph.add_edge(1, 2)
@@ -22,7 +12,6 @@ def main():
     # matrix_graph.add_directed_edge(0, 2, 3)
     matrix_graph.add_directed_edge(1, 2, 4)
     matrix_graph.add_directed_edge(2, 3, 1)
->>>>>>> b0489db5f1e4edd3454db6b88f3c05a5c1db642c
   
 
     # Crie uma instância da classe GraphAdjList e adicione arestas

@@ -231,7 +231,7 @@ class GraphAlgorithms:
             if vertex == end_vertex:
                 break
 
-            for neighbor in GraphAlgorithms.get_neighbors(graph, vertex):
+            for neighbor in GraphAlgorithms.get_neighbors(graph, vertex, len(graph)):
                 #adiciona os vizinhos não visitados à fila e  marca como visitados
                 if not visited[neighbor]:
                     visited[neighbor] = True
