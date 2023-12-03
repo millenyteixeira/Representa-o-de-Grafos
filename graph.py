@@ -306,6 +306,95 @@ class GraphAlgorithms:
 
         return distance_matrix
 
+def dijkstra(graph, start):
 
+        # Inicializa a origem com 0
+        graph.distances[start] = 0
+
+        # Conjunto de vértices visitados
+        visited = set()
+
+        while visited != set(graph.distances):
+            # Encontra o vértice não visitado com menor distância atual
+            current_vertex = None
+            short_distance = sys.maxsize
+            for vertex in graph:
+                if vertex not in visited and graph.distances[vertex] < short_distance:
+                    current_vertex = vertex
+                    short_distance = graph.distances[vertex]
+
+            # Marca o vértice atual como visitado
+            visited.add(current_vertex)
+
+            # Atualiza as distâncias dos vértices vizinhos
+            for graph.weight in graph[current_vertex]:
+                print(graph.weight[current_vertex])
+                #if graph.distances[current_vertex] + weight < graph.distances[neighbor]:
+                #    graph.distances[neighbor] = graph.distances[current_vertex] + weight
+
+        # Retorna as distâncias mais curtas a partir da origem
+        #return graph.distances
+'''    
+        # Algoritmo de Dijkstra
+    def dijkstra(graph, start):
+
+        # Inicializa a distância para o vértice de origem como 0
+        graph.distances[start] = 0
+
+        # Usa uma fila de prioridade (heap) para manter os vértices a serem explorados
+        priority_queue = [(0, start)]
+        
+        while priority_queue:
+            current_distance, current_vertex = heapq.heappop(priority_queue)
+
+            # Ignora vértices já processados
+            if current_distance > graph.distances[current_vertex]:
+                continue
+
+            # Atualiza as distâncias dos vizinhos
+            for neighbor in range(graph.num_vertices):
+                if graph.graph[current_vertex][neighbor] > 0:
+                    distance = current_distance + graph.weight[current_vertex][neighbor]
+
+                    # Se encontrar um caminho mais curto, atualiza a distância
+                    if distance < graph.distances[neighbor]:
+                        graph.distances[neighbor] = distance
+                        heapq.heappush(priority_queue, (distance, neighbor))
+
+        # Retorna as distâncias calculadas
+        return graph.distances
+
+    def dijkstra(graph, start):
+        if start < 0 or start >= graph.num_vertices:
+            raise ValueError("O vértice inicial está fora do intervalo válido.")
+
+        # Inicializa as distâncias a partir do vértice de origem como infinito para todos os vértices
+        distances = [float('inf')] * graph.num_vertices
+        distances[start] = 0
+
+        # Inicializa um conjunto para acompanhar os vértices já visitados
+        visited = set()
+
+        # Loop para encontrar o caminho mais curto para todos os vértices
+        while len(visited) < graph.num_vertices:
+            # Escolhe o vértice não visitado mais próximo
+            min_distance = float('inf')
+            min_vertex = -1
+            for v in range(graph.num_vertices):
+                if distances[v] < min_distance and v not in visited:
+                    min_distance = distances[v]
+                    min_vertex = v
+
+            # Adiciona o vértice escolhido ao conjunto de visitados
+            visited.add(min_vertex)
+
+            # Atualiza as distâncias dos vizinhos do vértice escolhido
+            for neighbor in GraphAlgorithms.get_neighbors(graph, min_vertex, graph.num_vertices):
+                weight = graph.graph[min_vertex][neighbor]
+                if weight != "-" and distances[min_vertex] + weight < distances[neighbor]:
+                    distances[neighbor] = distances[min_vertex] + weight
+
+        return distances
+'''   
 
 
