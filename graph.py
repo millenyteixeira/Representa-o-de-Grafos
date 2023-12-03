@@ -284,6 +284,28 @@ class GraphAlgorithms:
      
         # retorna as distâncias mais curtas
         return distance
+    
+    # Dentro da classe GraphAlgorithms
+    @staticmethod
+    def floyd_warshall(graph):
+        num_vertices = len(graph)
+        distance_matrix = [[float('inf')] * num_vertices for _ in range(num_vertices)]
+
+        for i in range(num_vertices):
+            for j in range(num_vertices):
+                if i == j:
+                    distance_matrix[i][j] = 0
+                elif graph[i][j] != 0:
+                    distance_matrix[i][j] = graph[i][j]
+
+        for k in range(num_vertices):
+            for i in range(num_vertices):
+                for j in range(num_vertices):
+                    if distance_matrix[i][k] != float('inf') and distance_matrix[k][j] != float('inf'):
+                        distance_matrix[i][j] = min(distance_matrix[i][j], distance_matrix[i][k] + distance_matrix[k][j])
+
+        return distance_matrix
+
 
 
 

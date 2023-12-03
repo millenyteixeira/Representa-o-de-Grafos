@@ -100,6 +100,23 @@ def main():
     for i, distances_from_i in enumerate(all_distances):
         for j, distance in enumerate(distances_from_i):
             print(f"A distância mais curta de {i} para {j} é {distance}")
+    # Dentro da função main
+    # Teste do algoritmo de Floyd-Warshall
+    print("\nAlgoritmo de Floyd-Warshall:")
+    floyd_warshall_result = graph_algorithms.floyd_warshall(matrix_graph.graph)
+
+    # Imprimir a menor distância de uma origem para todos os outros vértices
+    start_vertex_floyd = 0
+    print(f"\nMenor distância de {start_vertex_floyd} para todos os outros vértices:")
+    for i, distance in enumerate(floyd_warshall_result[start_vertex_floyd]):
+        print(f"A distância mais curta de {start_vertex_floyd} para {i} é {distance}")
+
+    # Imprimir a menor distância de todos para todos
+    print("\nMenor distância de todos para todos:")
+    for i, row in enumerate(floyd_warshall_result):
+        for j, distance in enumerate(row):
+            print(f"A distância mais curta de {i} para {j} é {distance}")
+
             
 if __name__ == "__main__":
     main()
