@@ -1,4 +1,4 @@
-from graph import GraphMatrix, GraphAdjList, GraphAlgorithms
+from graph import GraphMatrix, GraphAdjList, GraphAlgorithms, Astar
 from export import export_directed_graph, export_undirected_graph
 
 def main():
@@ -94,16 +94,15 @@ def main():
     else:
         print(f"Não existe um caminho entre {start_vertex} e {end_vertex}.")
 
- 
-
     # Funções de exportações para .gexf
     export_directed_graph(matrix_graph, "Directed_graph.gexf")
     export_undirected_graph(matrix_graph, "Undirected_graph.gexf")
 
+    graphFile = GraphMatrix.load_from_file('graph-test-100.txt')
     # Teste do algoritmo de Bellman-Ford para calcular a menor distância de uma origem para todos os outros vértices
     print("\nAlgoritmo de Bellman-Ford para uma origem:")
     start_vertex_bellman_ford = 0
-    distances_from_source = graph_algorithms.bellman_ford(matrix_graph, start_vertex_bellman_ford)
+    distances_from_source = graph_algorithms.bellman_ford(graphFile, start_vertex_bellman_ford)
 
     for i, distance in enumerate(distances_from_source):
         print(f"A distância mais curta de {start_vertex_bellman_ford} para {i} é {distance}")
@@ -111,8 +110,8 @@ def main():
     # Teste do algoritmo de Bellman-Ford para calcular a menor distância de todos para todos
     print("\nAlgoritmo de Bellman-Ford para todos os pares de vértices:")
     all_distances = []
-    for v in range(len(matrix_graph)):
-        distances_from_v = graph_algorithms.bellman_ford(matrix_graph, v)
+    for v in range(len(graphFile)):
+        distances_from_v = graph_algorithms.bellman_ford(graphFile, v)
         all_distances.append(distances_from_v)
 
     for i, distances_from_i in enumerate(all_distances):
@@ -124,7 +123,7 @@ def main():
     # Teste do algoritmo de Dijkstra
     print("\nAlgoritmo de Dijkstra:")
     start_vertex_dijkstra = 0
-    dijkstra_result = graph_algorithms.dijkstra(matrix_graph, start_vertex_dijkstra)
+    dijkstra_result = graph_algorithms.dijkstra(graphFile, start_vertex_dijkstra)
 
     # Imprimir a menor distância de uma origem para todos os outros vértices
     for i, distance in enumerate(distances_from_source):
@@ -133,13 +132,27 @@ def main():
     # Imprimir a menor distância de todos para todos
     print("\nAlgoritmo de Dijkstra para todos os pares de vértices:")
     all_distances = []
-    for v in range(len(matrix_graph)):
-        distances_from_v = graph_algorithms.dijkstra(matrix_graph, v)
+    for v in range(len(graphFile)):
+        distances_from_v = graph_algorithms.dijkstra(graphFile, v)
         all_distances.append(distances_from_v)
 
     for i, distances_from_i in enumerate(all_distances):
         for j, distance in enumerate(distances_from_i):
             print(f"A distância mais curta de {i} para {j} é {distance}")
+    
+    print("\nAlgoritmo A* para encontrar o caminho mais curto:")
+    nome_arquivo = "graph-test-100.txt"  # Substitua pelo nome do seu arquivo
+    grafo = Astar.ler_grafo_do_arquivo_Astar(nome_arquivo)
+
+    inicio = 0
+    objetivo = 14
+
+    resultado = Astar.a_estrela(grafo, inicio, objetivo)
+
+    if resultado != float('inf'):
+        print(f"Custo mínimo de {inicio} para {objetivo}: {resultado}")
+    else:
+        print(f"Caminho de {inicio} para {objetivo} não existe.")
             
 if __name__ == "__main__":
     main()

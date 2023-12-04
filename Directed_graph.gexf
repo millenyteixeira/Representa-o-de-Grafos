@@ -6,16 +6,32 @@
       <node id="1" label="Node 1" />
       <node id="2" label="Node 2" />
       <node id="3" label="Node 3" />
+      <node id="4" label="Node 4" />
+      <node id="5" label="Node 5" />
     </nodes>
     <edges>
       <edge source="0" target="1" type="directed" weight="2"/>
-      <edge source="0" target="2" type="directed" weight="3"/>
+      <edge source="0" target="2" type="directed" weight="5"/>
+      <edge source="0" target="3" type="directed" weight="5"/>
+      <edge source="0" target="5" type="directed" weight="7"/>
       <edge source="1" target="0" type="directed" weight="2"/>
-      <edge source="1" target="2" type="directed" weight="4"/>
-      <edge source="2" target="0" type="directed" weight="3"/>
-      <edge source="2" target="1" type="directed" weight="4"/>
-      <edge source="2" target="3" type="directed" weight="1"/>
-      <edge source="3" target="2" type="directed" weight="1"/>
+      <edge source="1" target="2" type="directed" weight="1"/>
+      <edge source="1" target="3" type="directed" weight="4"/>
+      <edge source="1" target="4" type="directed" weight="1"/>
+      <edge source="1" target="5" type="directed" weight="3"/>
+      <edge source="2" target="0" type="directed" weight="5"/>
+      <edge source="2" target="1" type="directed" weight="1"/>
+      <edge source="2" target="5" type="directed" weight="1"/>
+      <edge source="3" target="0" type="directed" weight="5"/>
+      <edge source="3" target="1" type="directed" weight="4"/>
+      <edge source="3" target="4" type="directed" weight="1"/>
+      <edge source="4" target="1" type="directed" weight="1"/>
+      <edge source="4" target="3" type="directed" weight="1"/>
+      <edge source="4" target="5" type="directed" weight="1"/>
+      <edge source="5" target="0" type="directed" weight="7"/>
+      <edge source="5" target="1" type="directed" weight="3"/>
+      <edge source="5" target="2" type="directed" weight="1"/>
+      <edge source="5" target="4" type="directed" weight="1"/>
     </edges>
   </graph>
 </gexf>

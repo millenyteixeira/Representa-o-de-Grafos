@@ -1,5 +1,39 @@
 from collections import deque
 import sys
+import heapq
+
+class AStar:
+    def __init__(self, graph):
+        self.graph = graph
+
+    def heuristic(self, current, goal):
+        # Implemente a sua heurística aqui (distância estimada de current para goal)
+        pass
+
+    def astar_search(self, start, goal):
+        heap = [(0, start)]
+        came_from = {start: None}
+        cost_so_far = {start: 0}
+
+        while heap:
+            current_cost, current_node = heapq.heappop(heap)
+
+            if current_node == goal:
+                path = []
+                while current_node is not None:
+                    path.insert(0, current_node)
+                    current_node = came_from[current_node]
+                return path
+
+            for neighbor, weight in self.graph.graph[current_node]:
+                new_cost = cost_so_far[current_node] + weight
+                if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
+                    cost_so_far[neighbor] = new_cost
+                    priority = new_cost + self.heuristic(neighbor, goal)
+                    heapq.heappush(heap, (priority, neighbor))
+                    came_from[neighbor] = current_node
+
+        return None
 
 # Matriz de adjacência do grafo
 class GraphMatrix:
@@ -52,6 +86,18 @@ class GraphMatrix:
         if 0 <= v1 < self.num_vertices and 0 <= v2 < self.num_vertices:
             self.graph[v1][v2] = 0
             self.graph[v2][v1] = 0
+    
+    @staticmethod
+    def load_from_file(filename):
+        with open(filename, 'r') as file:
+            num_vertices, num_edges = map(int, file.readline().split())
+            graph = GraphMatrix(num_vertices)
+
+            for _ in range(num_edges):
+                v1, v2, weight = map(int, file.readline().split())
+                graph.add_edge(v1, v2, weight)
+
+        return graph
 
 # Lista de adjacência do grafo
 class GraphAdjList:
@@ -324,6 +370,55 @@ class GraphAlgorithms:
 
         # Retorna as distâncias mais curtas a partir da origem
         return distance
+    
+    @staticmethod
+    def astar(graph, start, goal):
+        astar_search = AStar(graph)
+        return astar_search.astar_search(start, goal)
+
+class Astar:
+    def __init__(self, vertices):
+        self.vertices = vertices
+        self.lista_adjacencia = {v: [] for v in range(vertices)}
+
+    def adicionar_aresta(self, origem, destino, peso):
+        # Certifique-se de que os vértices de origem e destino existem
+        if origem in self.lista_adjacencia and destino in self.lista_adjacencia:
+            self.lista_adjacencia[origem].append((destino, peso))
+        else:
+            print(f"Erro: Vértices {origem} ou {destino} não existem no grafo.")
+
+    def a_estrela(grafo, inicio, objetivo):
+        fila_prioridade = [(0, inicio)]
+        visitados = set()
+
+        while fila_prioridade:
+            (custo_atual, atual) = heapq.heappop(fila_prioridade)
+
+            if atual in visitados:
+                continue
+
+            visitados.add(atual)
+
+            if atual == objetivo:
+                return custo_atual
+
+            for (vizinho, peso) in grafo.lista_adjacencia[atual]:
+                heapq.heappush(fila_prioridade, (custo_atual + peso, vizinho))
+
+        return float('inf')
+
+    def ler_grafo_do_arquivo_Astar(nome_arquivo):
+        with open(nome_arquivo, 'r') as arquivo:
+            linhas = arquivo.readlines()
+            vertices, arestas = map(int, linhas[0].split())
+            grafo = Astar(vertices)
+
+            for linha in linhas[1:]:
+                origem, destino, peso = map(int, linha.split())
+                grafo.adicionar_aresta(origem, destino, peso)
+
+        return grafo
 '''    
         # Algoritmo de Dijkstra
     def dijkstra(graph, start):
