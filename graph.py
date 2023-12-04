@@ -1,4 +1,5 @@
 from collections import deque
+import sys
 
 # Matriz de adjacência do grafo
 class GraphMatrix:
@@ -306,34 +307,23 @@ class GraphAlgorithms:
 
         return distance_matrix
 
-def dijkstra(graph, start):
+    @staticmethod
+    def dijkstra(graph, start):
 
-        # Inicializa a origem com 0
-        graph.distances[start] = 0
+        # Inicializa todos os vértices com infinito e a origem com 0
+        distance = [float("Inf")] * len(graph.graph)
+        distance[start] = 0
 
-        # Conjunto de vértices visitados
-        visited = set()
-
-        while visited != set(graph.distances):
-            # Encontra o vértice não visitado com menor distância atual
-            current_vertex = None
-            short_distance = sys.maxsize
-            for vertex in graph:
-                if vertex not in visited and graph.distances[vertex] < short_distance:
-                    current_vertex = vertex
-                    short_distance = graph.distances[vertex]
-
-            # Marca o vértice atual como visitado
-            visited.add(current_vertex)
-
-            # Atualiza as distâncias dos vértices vizinhos
-            for graph.weight in graph[current_vertex]:
-                print(graph.weight[current_vertex])
-                #if graph.distances[current_vertex] + weight < graph.distances[neighbor]:
-                #    graph.distances[neighbor] = graph.distances[current_vertex] + weight
+        # Relaxa as arestas
+        for _ in range(len(graph.graph) - 1):
+            for i in range(len(graph.graph)):
+                for j in range(len(graph.graph)):
+                    if graph.graph[i][j] != 0:  # Verifica se há uma aresta entre os dois vértices
+                        if distance[i] != float("inf") and distance[i] + graph.graph[i][j] < distance[j]:
+                            distance[j] = distance[i] + graph.graph[i][j]
 
         # Retorna as distâncias mais curtas a partir da origem
-        #return graph.distances
+        return distance
 '''    
         # Algoritmo de Dijkstra
     def dijkstra(graph, start):

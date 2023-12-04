@@ -3,15 +3,24 @@ from export import export_directed_graph, export_undirected_graph
 
 def main():
     # Crie uma instância da classe GraphMatrix e adicione arestas
-    matrix_graph = GraphMatrix(4)
-    matrix_graph.add_edge(0, 1, 1)
-    matrix_graph.add_edge(0, 2, 3)
+    matrix_graph = GraphMatrix(6)
+    matrix_graph.add_edge(0, 1, 2)
+    matrix_graph.add_edge(0, 2, 5)
+    matrix_graph.add_edge(0, 3, 5)
+    matrix_graph.add_edge(0, 5, 7)
+    matrix_graph.add_edge(1, 2, 1)
+    matrix_graph.add_edge(1, 3, 4)
+    matrix_graph.add_edge(1, 4, 1)
+    matrix_graph.add_edge(1, 5, 3)
+    matrix_graph.add_edge(2, 5, 1)
+    matrix_graph.add_edge(3, 4, 1)
+    matrix_graph.add_edge(4, 5, 1)
     #matrix_graph.add_edge(1, 2)
     #matrix_graph.add_edge(2, 3)
     # matrix_graph.add_directed_edge(0, 1, 2)
     # matrix_graph.add_directed_edge(0, 2, 3)
-    matrix_graph.add_directed_edge(1, 2, 4)
-    matrix_graph.add_directed_edge(2, 3, 1)
+    # matrix_graph.add_directed_edge(1, 2, 4)
+    # matrix_graph.add_directed_edge(2, 3, 1)
   
 
     # Crie uma instância da classe GraphAdjList e adicione arestas
@@ -110,22 +119,27 @@ def main():
         for j, distance in enumerate(distances_from_i):
             print(f"A distância mais curta de {i} para {j} é {distance}")
     # Dentro da função main
-    # Teste do algoritmo de Floyd-Warshall
-    print("\nAlgoritmo de Floyd-Warshall:")
-    floyd_warshall_result = graph_algorithms.floyd_warshall(matrix_graph.graph)
+
+
+    # Teste do algoritmo de Dijkstra
+    print("\nAlgoritmo de Dijkstra:")
+    start_vertex_dijkstra = 0
+    dijkstra_result = graph_algorithms.dijkstra(matrix_graph, start_vertex_dijkstra)
 
     # Imprimir a menor distância de uma origem para todos os outros vértices
-    start_vertex_floyd = 0
-    print(f"\nMenor distância de {start_vertex_floyd} para todos os outros vértices:")
-    for i, distance in enumerate(floyd_warshall_result[start_vertex_floyd]):
-        print(f"A distância mais curta de {start_vertex_floyd} para {i} é {distance}")
+    for i, distance in enumerate(distances_from_source):
+        print(f"A distância mais curta de {start_vertex_dijkstra} para {i} é {distance}")
 
     # Imprimir a menor distância de todos para todos
-    print("\nMenor distância de todos para todos:")
-    for i, row in enumerate(floyd_warshall_result):
-        for j, distance in enumerate(row):
-            print(f"A distância mais curta de {i} para {j} é {distance}")
+    print("\nAlgoritmo de Dijkstra para todos os pares de vértices:")
+    all_distances = []
+    for v in range(len(matrix_graph)):
+        distances_from_v = graph_algorithms.dijkstra(matrix_graph, v)
+        all_distances.append(distances_from_v)
 
+    for i, distances_from_i in enumerate(all_distances):
+        for j, distance in enumerate(distances_from_i):
+            print(f"A distância mais curta de {i} para {j} é {distance}")
             
 if __name__ == "__main__":
     main()
