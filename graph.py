@@ -1,39 +1,6 @@
 from collections import deque
-import sys
+import time
 import heapq
-
-class AStar:
-    def __init__(self, graph):
-        self.graph = graph
-
-    def heuristic(self, current, goal):
-        # Implemente a sua heurística aqui (distância estimada de current para goal)
-        pass
-
-    def astar_search(self, start, goal):
-        heap = [(0, start)]
-        came_from = {start: None}
-        cost_so_far = {start: 0}
-
-        while heap:
-            current_cost, current_node = heapq.heappop(heap)
-
-            if current_node == goal:
-                path = []
-                while current_node is not None:
-                    path.insert(0, current_node)
-                    current_node = came_from[current_node]
-                return path
-
-            for neighbor, weight in self.graph.graph[current_node]:
-                new_cost = cost_so_far[current_node] + weight
-                if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
-                    cost_so_far[neighbor] = new_cost
-                    priority = new_cost + self.heuristic(neighbor, goal)
-                    heapq.heappush(heap, (priority, neighbor))
-                    came_from[neighbor] = current_node
-
-        return None
 
 # Matriz de adjacência do grafo
 class GraphMatrix:
@@ -328,7 +295,6 @@ class GraphAlgorithms:
                         print("O grafo contém um ciclo de peso negativo")
                         return
 
-     
         # retorna as distâncias mais curtas
         return distance
     
@@ -350,12 +316,10 @@ class GraphAlgorithms:
                 for j in range(num_vertices):
                     if distance_matrix[i][k] != float('inf') and distance_matrix[k][j] != float('inf'):
                         distance_matrix[i][j] = min(distance_matrix[i][j], distance_matrix[i][k] + distance_matrix[k][j])
-
         return distance_matrix
 
     @staticmethod
     def dijkstra(graph, start):
-
         # Inicializa todos os vértices com infinito e a origem com 0
         distance = [float("Inf")] * len(graph.graph)
         distance[start] = 0
@@ -367,119 +331,47 @@ class GraphAlgorithms:
                     if graph.graph[i][j] != 0:  # Verifica se há uma aresta entre os dois vértices
                         if distance[i] != float("inf") and distance[i] + graph.graph[i][j] < distance[j]:
                             distance[j] = distance[i] + graph.graph[i][j]
-
         # Retorna as distâncias mais curtas a partir da origem
         return distance
     
     @staticmethod
-    def astar(graph, start, goal):
-        astar_search = AStar(graph)
-        return astar_search.astar_search(start, goal)
-
-class Astar:
-    def __init__(self, vertices):
-        self.vertices = vertices
-        self.lista_adjacencia = {v: [] for v in range(vertices)}
-
-    def adicionar_aresta(self, origem, destino, peso):
-        # Certifique-se de que os vértices de origem e destino existem
-        if origem in self.lista_adjacencia and destino in self.lista_adjacencia:
-            self.lista_adjacencia[origem].append((destino, peso))
-        else:
-            print(f"Erro: Vértices {origem} ou {destino} não existem no grafo.")
-
-    def a_estrela(grafo, inicio, objetivo):
-        fila_prioridade = [(0, inicio)]
-        visitados = set()
-
-        while fila_prioridade:
-            (custo_atual, atual) = heapq.heappop(fila_prioridade)
-
-            if atual in visitados:
-                continue
-
-            visitados.add(atual)
-
-            if atual == objetivo:
-                return custo_atual
-
-            for (vizinho, peso) in grafo.lista_adjacencia[atual]:
-                heapq.heappush(fila_prioridade, (custo_atual + peso, vizinho))
-
-        return float('inf')
-
-    def ler_grafo_do_arquivo_Astar(nome_arquivo):
-        with open(nome_arquivo, 'r') as arquivo:
-            linhas = arquivo.readlines()
-            vertices, arestas = map(int, linhas[0].split())
-            grafo = Astar(vertices)
-
-            for linha in linhas[1:]:
-                origem, destino, peso = map(int, linha.split())
-                grafo.adicionar_aresta(origem, destino, peso)
-
-        return grafo
-'''    
-        # Algoritmo de Dijkstra
-    def dijkstra(graph, start):
-
-        # Inicializa a distância para o vértice de origem como 0
-        graph.distances[start] = 0
-
-        # Usa uma fila de prioridade (heap) para manter os vértices a serem explorados
-        priority_queue = [(0, start)]
+    def astar(matrix, start, goal):
+        rows, cols = len(matrix), len(matrix[0])
         
-        while priority_queue:
-            current_distance, current_vertex = heapq.heappop(priority_queue)
-
-            # Ignora vértices já processados
-            if current_distance > graph.distances[current_vertex]:
-                continue
-
-            # Atualiza as distâncias dos vizinhos
-            for neighbor in range(graph.num_vertices):
-                if graph.graph[current_vertex][neighbor] > 0:
-                    distance = current_distance + graph.weight[current_vertex][neighbor]
-
-                    # Se encontrar um caminho mais curto, atualiza a distância
-                    if distance < graph.distances[neighbor]:
-                        graph.distances[neighbor] = distance
-                        heapq.heappush(priority_queue, (distance, neighbor))
-
-        # Retorna as distâncias calculadas
-        return graph.distances
-
-    def dijkstra(graph, start):
-        if start < 0 or start >= graph.num_vertices:
-            raise ValueError("O vértice inicial está fora do intervalo válido.")
-
-        # Inicializa as distâncias a partir do vértice de origem como infinito para todos os vértices
-        distances = [float('inf')] * graph.num_vertices
-        distances[start] = 0
-
-        # Inicializa um conjunto para acompanhar os vértices já visitados
-        visited = set()
-
-        # Loop para encontrar o caminho mais curto para todos os vértices
-        while len(visited) < graph.num_vertices:
-            # Escolhe o vértice não visitado mais próximo
-            min_distance = float('inf')
-            min_vertex = -1
-            for v in range(graph.num_vertices):
-                if distances[v] < min_distance and v not in visited:
-                    min_distance = distances[v]
-                    min_vertex = v
-
-            # Adiciona o vértice escolhido ao conjunto de visitados
-            visited.add(min_vertex)
-
-            # Atualiza as distâncias dos vizinhos do vértice escolhido
-            for neighbor in GraphAlgorithms.get_neighbors(graph, min_vertex, graph.num_vertices):
-                weight = graph.graph[min_vertex][neighbor]
-                if weight != "-" and distances[min_vertex] + weight < distances[neighbor]:
-                    distances[neighbor] = distances[min_vertex] + weight
-
-        return distances
-'''   
-
+        def heuristic(node):
+            return abs(node[0] - goal[0]) + abs(node[1] - goal[1])
+        
+        def is_valid(node):
+            return 0 <= node[0] < rows and 0 <= node[1] < cols
+        
+        def get_neighbors(node):
+            neighbors = [(node[0] + 1, node[1]), (node[0] - 1, node[1]),
+                        (node[0], node[1] + 1), (node[0], node[1] - 1)]
+            return [neighbor for neighbor in neighbors if is_valid(neighbor)]
+        
+        open_set = [(0, start)]  # (f_score, node)
+        came_from = {}
+        g_score = {start: 0}
+        
+        while open_set:
+            _, current = heapq.heappop(open_set)
+            
+            if current == goal:
+                path = []
+                while current in came_from:
+                    path.append(current)
+                    current = came_from[current]
+                path.append(start)
+                return path[::-1]
+            
+            for neighbor in get_neighbors(current):
+                tentative_g_score = g_score[current] + matrix[neighbor[0]][neighbor[1]]
+                
+                if neighbor not in g_score or tentative_g_score < g_score[neighbor]:
+                    g_score[neighbor] = tentative_g_score
+                    f_score = tentative_g_score + heuristic(neighbor)
+                    heapq.heappush(open_set, (f_score, neighbor))
+                    came_from[neighbor] = current
+        
+        return None  # No path found
 
